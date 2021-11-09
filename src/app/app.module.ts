@@ -56,7 +56,7 @@ const routes: Routes = [
     MatToolbarModule,
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers, { 
-      metaReducers,
+      metaReducers, //plain reducer function but processed before the normal reducers
       runtimeChecks:{
         strictActionImmutability:true, //prevent writing actions in an incorrect way
         strictStateImmutability:true, //prevent writing producer in an incorrect way
