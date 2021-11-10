@@ -6,6 +6,7 @@ import { Actions } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { CourseActions } from './action-types';
 import { concatMap, map } from 'rxjs/operators';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 @Injectable()
 export class CoursesEffects {
@@ -20,5 +21,15 @@ export class CoursesEffects {
             )
     );
 
-
+    saveCourse$ = createEffect(
+        () => this.actions$
+        .pipe(
+            ofType(CourseActions.courseUpdated), // ignore other actions
+            concatMap(action => this.coursesHttpService.saveCourse(
+                action.update.id,
+                action.update.changes
+            )),
+        ),
+        {dispatch: false}
+    );
 }
